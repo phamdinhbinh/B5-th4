@@ -1,25 +1,35 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
-function App() {
+const useModal = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const showHideClassName = isOpen ? "modal d-block" : "modal d-none";
+
+  const modal = (
+    <div className={showHideClassName}>
+      <div className="modal-container">
+        <h2>Hello Modal</h2>
+        <div className="form-group">
+          <label>Hello</label>
+        </div>
+        <button onClick={() => setIsOpen(!isOpen)} type="button">
+          close
+        </button>
+      </div>
+    </div>
+  );
+
+  return { isOpen, setIsOpen, modal };
+};
+
+export default function App() {
+  const { modal, isOpen, setIsOpen } = useModal();
+  const onOpenModal = () => setIsOpen(true);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='container'>
+      <div>Welcome</div>
+      <div onClick={onOpenModal}>Open modal</div>
+      {modal}
     </div>
   );
 }
-
-export default App;
